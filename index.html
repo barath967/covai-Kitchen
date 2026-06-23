@@ -645,24 +645,19 @@ fetch(API_URL,{
   body:params
 })
 
-  fetch(API_URL,{
-    method:"POST",
-    mode:"no-cors",
-    body:formData
-  })
-  .then(() => {
+fetch(API_URL,{
+  method:"POST",
+  mode:"no-cors",
+  body:formData
+});
 
-    document
-    .getElementById(
-      "formSection"
-    )
-    .style.display = "none";
+document.getElementById(
+  "formSection"
+).style.display = "none";
 
-    document
-    .getElementById(
-      "successSection"
-    )
-    .style.display = "block";
+document.getElementById(
+  "successSection"
+).style.display = "block";
 
   })
   .catch(error => {
