@@ -16,26 +16,28 @@ body{
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  background:#000;
-  color:#fff;
+  background:linear-gradient(135deg,#000000,#1a0000);
+  color:#ffffff;
   font-family:'Segoe UI',sans-serif;
   text-align:center;
 }
 
 h2{
-  color:#ff2b2b;
   font-size:2rem;
+  color:#ff2b2b;
   margin-bottom:15px;
+  animation:fadeIn 1s ease-in-out;
 }
 
 p{
-  color:#ddd;
   font-size:1.1rem;
+  color:#dddddd;
+  animation:fadeIn 2s ease-in-out;
 }
 
 .spinner{
   margin:30px auto;
-  border:8px solid #222;
+  border:8px solid #2a2a2a;
   border-top:8px solid #ff0000;
   border-radius:50%;
   width:80px;
@@ -43,26 +45,37 @@ p{
   animation:spin 1s linear infinite;
 }
 
+a{
+  color:#ff4d4d;
+  font-weight:bold;
+  text-decoration:none;
+}
+
 @keyframes spin{
   0%{transform:rotate(0deg);}
   100%{transform:rotate(360deg);}
 }
 
-a{
-  color:#ff4d4d;
-  text-decoration:none;
-  font-weight:bold;
+@keyframes fadeIn{
+  from{
+    opacity:0;
+    transform:translateY(10px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
 }
 
 </style>
 
 <script>
 
-setTimeout(function(){
+setTimeout(() => {
 
-  window.location.replace(
-    "https://script.google.com/macros/s/AKfycbzhAfSIJZcWW8luqA5jtGl0pzXrStNqTo9_D7rP6--RH9HWkeE912hgGc-tXQ2CSg20/exec"
-  );
+window.location.replace(
+"https://script.google.com/macros/s/AKfycbxzqRkt6al4PIhlv9Eah-VuMv5_ksMzQzWHZoOxSqMMLRLj7o7vQXZ6H29UDT4CQzsF/exec"
+);
 
 },1000);
 
@@ -73,7 +86,7 @@ setTimeout(function(){
 <body>
 
 <h2>
-🌿 Redirecting to Kovai Kitchen Garden
+🌿 Redirecting to Kovai Kitchen Garden...
 </h2>
 
 <div class="spinner"></div>
@@ -82,11 +95,12 @@ setTimeout(function(){
 If you are not redirected automatically,
 <br><br>
 
-<a href="https://script.google.com/macros/s/AKfycbzhAfSIJZcWW8luqA5jtGl0pzXrStNqTo9_D7rP6--RH9HWkeE912hgGc-tXQ2CSg20/exec">
+<a href="https://script.google.com/macros/s/AKfycbxzqRkt6al4PIhlv9Eah-VuMv5_ksMzQzWHZoOxSqMMLRLj7o7vQXZ6H29UDT4CQzsF/exec">
 Click Here
 </a>
 
 </p>
 
 </body>
+
 </html>
