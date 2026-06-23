@@ -342,9 +342,12 @@ class="actionBtn">
 const API_URL =
 "https://script.google.com/macros/s/AKfycbxtyUrBEPOE393zTqP8QfZQAg70X0SiXpBrehisQ0L1Wkg2AdbH2geTeKcTojRYppg2/exec";
 
-let masterData;
+let masterData = null;
 
-// LOAD MASTER DATA
+/* =========================
+   LOAD MASTER DATA
+========================= */
+
 fetch(API_URL + "?master=true")
 .then(response => response.text())
 .then(text => {
@@ -363,271 +366,310 @@ fetch(API_URL + "?master=true")
 
 });
 
+/* =========================
+   LOAD DROPDOWNS
+========================= */
+
 function loadMaster(data){
 
-masterData = data;
+  masterData = data;
 
-document.getElementById("loading").style.display = "none";
-document.getElementById("formSection").classList.remove("hidden");
-
-const packageDropdown =
-document.getElementById("package");
-
-data.packages.forEach(item => {
-
-  const option =
-  document.createElement("option");
-
-  option.value = item.name;
-  option.text = item.name;
-
-  packageDropdown.add(option);
-
-});
-
-showPackageDescription();
-
-data.cakes.forEach(item => {
-
-  const option =
-  document.createElement("option");
-
-  option.value = item;
-  option.text = item;
+  document.getElementById("loading").style.display = "none";
 
   document
-  .getElementById("cake")
-  .add(option);
+  .getElementById("formSection")
+  .classList.remove("hidden");
 
-});
+  const packageDropdown =
+  document.getElementById("package");
 
-data.decorations.forEach(item => {
+  data.packages.forEach(item => {
 
-  const option =
-  document.createElement("option");
+    const option =
+    document.createElement("option");
 
-  option.value = item;
-  option.text = item;
+    option.value = item.name;
+    option.text = item.name;
+
+    packageDropdown.add(option);
+
+  });
+
+  showPackageDescription();
+
+  const cakeDropdown =
+  document.getElementById("cake");
+
+  data.cakes.forEach(item => {
+
+    const option =
+    document.createElement("option");
+
+    option.value = item;
+    option.text = item;
+
+    cakeDropdown.add(option);
+
+  });
+
+  const decorationDropdown =
+  document.getElementById("decoration");
+
+  data.decorations.forEach(item => {
+
+    const option =
+    document.createElement("option");
+
+    option.value = item;
+    option.text = item;
+
+    decorationDropdown.add(option);
+
+  });
 
   document
-  .getElementById("decoration")
-  .add(option);
+  .getElementById("cakePdf")
+  .href = data.cakePdf;
 
-});
+  document
+  .getElementById("decorationPdf")
+  .href = data.decorationPdf;
 
-document
-.getElementById("cakePdf")
-.href = data.cakePdf;
+  document
+  .getElementById("locationLink")
+  .href = data.locationLink;
 
-document
-.getElementById("decorationPdf")
-.href = data.decorationPdf;
-
-document
-.getElementById("locationLink")
-.href = data.locationLink;
-
-document
-.getElementById("successLocation")
-.href = data.locationLink;
+  document
+  .getElementById("successLocation")
+  .href = data.locationLink;
 
 }
+
+/* =========================
+   PACKAGE DESCRIPTION
+========================= */
 
 function showPackageDescription(){
 
-const value =
-document.getElementById("package").value;
+  const selectedValue =
+  document.getElementById("package").value;
 
-const item =
-masterData.packages.find(
-x => x.name === value
-);
+  const item =
+  masterData.packages.find(
+    x => x.name === selectedValue
+  );
 
-document.getElementById(
-"packageDescription"
-).innerHTML =
-item ? item.description : "";
+  document
+  .getElementById("packageDescription")
+  .innerHTML =
+  item ? item.description : "";
 
 }
+
+/* =========================
+   TOGGLE CAKE
+========================= */
 
 function toggleCake(){
 
-document.getElementById(
-"cakeDiv"
-).style.display =
+  document.getElementById(
+    "cakeDiv"
+  ).style.display =
 
-document.getElementById(
-"cakeRequired"
-).value === "Yes"
+  document.getElementById(
+    "cakeRequired"
+  ).value === "Yes"
 
-? "block"
-: "none";
+  ? "block"
+  : "none";
 
 }
+
+/* =========================
+   TOGGLE DECORATION
+========================= */
 
 function toggleDecoration(){
 
-document.getElementById(
-"decorationDiv"
-).style.display =
+  document.getElementById(
+    "decorationDiv"
+  ).style.display =
 
-document.getElementById(
-"decorationRequired"
-).value === "Yes"
+  document.getElementById(
+    "decorationRequired"
+  ).value === "Yes"
 
-? "block"
-: "none";
+  ? "block"
+  : "none";
 
 }
+
+/* =========================
+   FORMAT EVENT SCHEDULE
+========================= */
 
 function formatEventSchedule(
-date,
-fromTime,
-toTime
+  date,
+  fromTime,
+  toTime
 ){
 
-const d = new Date(date);
+  const d =
+  new Date(date);
 
-const formattedDate =
-d.toLocaleDateString(
-'en-GB',
-{
-day:'2-digit',
-month:'short',
-year:'numeric'
+  const formattedDate =
+  d.toLocaleDateString(
+    "en-GB",
+    {
+      day:"2-digit",
+      month:"short",
+      year:"numeric"
+    }
+  );
+
+  return (
+    formattedDate +
+    " | " +
+    fromTime +
+    " - " +
+    toTime
+  );
+
 }
-);
 
-return formattedDate +
-' | ' +
-fromTime +
-' - ' +
-toTime;
+/* =========================
+   SUBMIT FORM
+========================= */
 
-}
-
-// SUBMIT
 document
 .getElementById("bookingForm")
 .addEventListener(
 "submit",
 function(e){
 
-e.preventDefault();
+  e.preventDefault();
 
-const selectedPackage =
-masterData.packages.find(
-x => x.name ===
-document.getElementById(
-"package"
-).value
-);
+  const selectedPackage =
+  masterData.packages.find(
+    x =>
+    x.name ===
+    document.getElementById(
+      "package"
+    ).value
+  );
 
-const data = {
+  const data = {
 
-name:
-document.getElementById(
-"name"
-).value,
+    name:
+    document.getElementById(
+      "name"
+    ).value,
 
-whatsapp:
-document.getElementById(
-"whatsapp"
-).value,
+    whatsapp:
+    document.getElementById(
+      "whatsapp"
+    ).value,
 
-eventSchedule:
-formatEventSchedule(
-document.getElementById(
-"eventDate"
-).value,
-document.getElementById(
-"fromTime"
-).value,
-document.getElementById(
-"toTime"
-).value
-),
+    eventSchedule:
+    formatEventSchedule(
+      document.getElementById(
+        "eventDate"
+      ).value,
 
-headCount:
-document.getElementById(
-"headCount"
-).value,
+      document.getElementById(
+        "fromTime"
+      ).value,
 
-package:
-document.getElementById(
-"package"
-).value,
+      document.getElementById(
+        "toTime"
+      ).value
+    ),
 
-packageDescription:
-selectedPackage
-?
-selectedPackage.description
-:
-"",
+    headCount:
+    document.getElementById(
+      "headCount"
+    ).value,
 
-music:
-document.getElementById(
-"music"
-).value,
+    package:
+    document.getElementById(
+      "package"
+    ).value,
 
-cakeRequired:
-document.getElementById(
-"cakeRequired"
-).value,
+    packageDescription:
+    selectedPackage
+    ?
+    selectedPackage.description
+    :
+    "",
 
-cake:
-document.getElementById(
-"cake"
-).value,
+    music:
+    document.getElementById(
+      "music"
+    ).value,
 
-decorationRequired:
-document.getElementById(
-"decorationRequired"
-).value,
+    cakeRequired:
+    document.getElementById(
+      "cakeRequired"
+    ).value,
 
-decoration:
-document.getElementById(
-"decoration"
-).value
+    cake:
+    document.getElementById(
+      "cake"
+    ).value,
 
-};
+    decorationRequired:
+    document.getElementById(
+      "decorationRequired"
+    ).value,
 
-const formData =
-new FormData();
+    decoration:
+    document.getElementById(
+      "decoration"
+    ).value
 
-Object.keys(data).forEach(
-key => {
-formData.append(
-key,
-data[key]
-);
-});
+  };
 
-fetch(API_URL,{
-method:"POST",
-mode:"no-cors",
-body:formData
-})
-.then(() => {
+  const formData =
+  new FormData();
 
-document.getElementById(
-"formSection"
-).style.display = "none";
+  Object.keys(data).forEach(
+    key => {
+      formData.append(
+        key,
+        data[key]
+      );
+    }
+  );
 
-document.getElementById(
-"successSection"
-).style.display = "block";
+  fetch(API_URL,{
+    method:"POST",
+    mode:"no-cors",
+    body:formData
+  })
+  .then(() => {
 
-})
-.catch(error => {
+    document
+    .getElementById(
+      "formSection"
+    )
+    .style.display = "none";
 
-alert(
-"Unable to submit booking"
-);
+    document
+    .getElementById(
+      "successSection"
+    )
+    .style.display = "block";
 
-console.error(error);
+  })
+  .catch(error => {
 
-});
+    console.error(error);
+
+    alert(
+      "Unable to submit booking"
+    );
+
+  });
 
 });
 
