@@ -8,69 +8,54 @@
 <title>Kovai Kitchen Garden</title>
 
 <meta http-equiv="refresh"
-content="2;url=https://script.google.com/macros/s/AKfycbxzqRkt6al4PIhlv9Eah-VuMv5_ksMzQzWHZoOxSqMMLRLj7o7vQXZ6H29UDT4CQzsF/exec">
+content="3;url=https://script.google.com/macros/s/AKfycbxzqRkt6al4PIhlv9Eah-VuMv5_ksMzQzWHZoOxSqMMLRLj7o7vQXZ6H29UDT4CQzsF/exec">
 
 <style>
 
 body{
 margin:0;
-height:100vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-font-family:Arial,sans-serif;
 background:#000;
 color:#fff;
+font-family:Segoe UI,sans-serif;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
 text-align:center;
-padding:20px;
+}
+
+.card{
+padding:30px;
+max-width:500px;
 }
 
 h1{
 color:#ff0000;
-margin-bottom:20px;
-}
-
-.spinner{
-width:70px;
-height:70px;
-border:8px solid #333;
-border-top:8px solid #ff0000;
-border-radius:50%;
-animation:spin 1s linear infinite;
-margin-bottom:25px;
-}
-
-@keyframes spin{
-0%{transform:rotate(0deg);}
-100%{transform:rotate(360deg);}
 }
 
 .btn{
 display:inline-block;
-padding:15px 25px;
+margin-top:20px;
+padding:16px 28px;
 background:#ff0000;
 color:#fff;
 text-decoration:none;
 border-radius:10px;
 font-weight:bold;
-margin-top:20px;
 }
 
 </style>
 
 <script>
 
-window.onload = function(){
-
-setTimeout(function(){
+function openForm(){
 
 window.location.href =
 "https://script.google.com/macros/s/AKfycbxzqRkt6al4PIhlv9Eah-VuMv5_ksMzQzWHZoOxSqMMLRLj7o7vQXZ6H29UDT4CQzsF/exec";
 
-},1000);
+}
 
-};
+setTimeout(openForm,1500);
 
 </script>
 
@@ -78,16 +63,21 @@ window.location.href =
 
 <body>
 
+<div class="card">
+
 <h1>🌿 Kovai Kitchen Garden</h1>
 
-<div class="spinner"></div>
+<p>
+Redirecting to booking form...
+</p>
 
-<p>Redirecting to booking page...</p>
-
-<a class="btn"
+<a
+class="btn"
 href="https://script.google.com/macros/s/AKfycbxzqRkt6al4PIhlv9Eah-VuMv5_ksMzQzWHZoOxSqMMLRLj7o7vQXZ6H29UDT4CQzsF/exec">
 Open Booking Form
 </a>
+
+</div>
 
 </body>
 </html>
