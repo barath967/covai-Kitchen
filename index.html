@@ -344,94 +344,140 @@ const API_URL =
 
 let masterData;
 
-const formData = new FormData();
+// LOAD MASTER DATA
+fetch(API_URL + "?master=true")
+.then(response => response.text())
+.then(text => {
 
-Object.keys(data).forEach(key => {
-  formData.append(key, data[key]);
-});
+  const data = JSON.parse(text);
 
-fetch(API_URL,{
-  method:"POST",
-  mode:"no-cors",
-  body:formData
-})
-.then(() => {
-
-  document.getElementById("formSection").style.display = "none";
-  document.getElementById("successSection").style.display = "block";
+  loadMaster(data);
 
 })
-.catch(err => {
+.catch(error => {
 
-  alert("Unable to submit booking");
-  console.error(err);
+  console.error(error);
+
+  document.getElementById("loading").innerHTML =
+  "Unable to load booking form";
 
 });
 
 function loadMaster(data){
 
-masterData=data;
+masterData = data;
 
-document.getElementById("loading").style.display="none";
+document.getElementById("loading").style.display = "none";
 document.getElementById("formSection").classList.remove("hidden");
 
 const packageDropdown =
 document.getElementById("package");
 
-data.packages.forEach(item=>{
-const option=document.createElement("option");
-option.value=item.name;
-option.text=item.name;
-packageDropdown.add(option);
+data.packages.forEach(item => {
+
+  const option =
+  document.createElement("option");
+
+  option.value = item.name;
+  option.text = item.name;
+
+  packageDropdown.add(option);
+
 });
 
 showPackageDescription();
 
-data.cakes.forEach(item=>{
-const option=document.createElement("option");
-option.value=item;
-option.text=item;
-cake.add(option);
+data.cakes.forEach(item => {
+
+  const option =
+  document.createElement("option");
+
+  option.value = item;
+  option.text = item;
+
+  document
+  .getElementById("cake")
+  .add(option);
+
 });
 
-data.decorations.forEach(item=>{
-const option=document.createElement("option");
-option.value=item;
-option.text=item;
-decoration.add(option);
+data.decorations.forEach(item => {
+
+  const option =
+  document.createElement("option");
+
+  option.value = item;
+  option.text = item;
+
+  document
+  .getElementById("decoration")
+  .add(option);
+
 });
 
-cakePdf.href=data.cakePdf;
-decorationPdf.href=data.decorationPdf;
-locationLink.href=data.locationLink;
-successLocation.href=data.locationLink;
+document
+.getElementById("cakePdf")
+.href = data.cakePdf;
+
+document
+.getElementById("decorationPdf")
+.href = data.decorationPdf;
+
+document
+.getElementById("locationLink")
+.href = data.locationLink;
+
+document
+.getElementById("successLocation")
+.href = data.locationLink;
 
 }
 
 function showPackageDescription(){
 
-const item=
+const value =
+document.getElementById("package").value;
+
+const item =
 masterData.packages.find(
-x=>x.name===package.value
+x => x.name === value
 );
 
-packageDescription.innerHTML=
+document.getElementById(
+"packageDescription"
+).innerHTML =
 item ? item.description : "";
 
 }
 
 function toggleCake(){
-cakeDiv.style.display =
-cakeRequired.value==="Yes"
+
+document.getElementById(
+"cakeDiv"
+).style.display =
+
+document.getElementById(
+"cakeRequired"
+).value === "Yes"
+
 ? "block"
 : "none";
+
 }
 
 function toggleDecoration(){
-decorationDiv.style.display =
-decorationRequired.value==="Yes"
+
+document.getElementById(
+"decorationDiv"
+).style.display =
+
+document.getElementById(
+"decorationRequired"
+).value === "Yes"
+
 ? "block"
 : "none";
+
 }
 
 function formatEventSchedule(
@@ -440,9 +486,9 @@ fromTime,
 toTime
 ){
 
-const d=new Date(date);
+const d = new Date(date);
 
-const formattedDate=
+const formattedDate =
 d.toLocaleDateString(
 'en-GB',
 {
@@ -460,7 +506,10 @@ toTime;
 
 }
 
-bookingForm.addEventListener(
+// SUBMIT
+document
+.getElementById("bookingForm")
+.addEventListener(
 "submit",
 function(e){
 
@@ -468,73 +517,115 @@ e.preventDefault();
 
 const selectedPackage =
 masterData.packages.find(
-x => x.name === package.value
+x => x.name ===
+document.getElementById(
+"package"
+).value
 );
 
 const data = {
 
-  name: name.value,
+name:
+document.getElementById(
+"name"
+).value,
 
-  whatsapp: whatsapp.value,
+whatsapp:
+document.getElementById(
+"whatsapp"
+).value,
 
-  eventSchedule:
-  formatEventSchedule(
-    eventDate.value,
-    fromTime.value,
-    toTime.value
-  ),
+eventSchedule:
+formatEventSchedule(
+document.getElementById(
+"eventDate"
+).value,
+document.getElementById(
+"fromTime"
+).value,
+document.getElementById(
+"toTime"
+).value
+),
 
-  headCount: headCount.value,
+headCount:
+document.getElementById(
+"headCount"
+).value,
 
-  package: package.value,
+package:
+document.getElementById(
+"package"
+).value,
 
-  packageDescription:
-  selectedPackage
-  ? selectedPackage.description
-  : "",
+packageDescription:
+selectedPackage
+?
+selectedPackage.description
+:
+"",
 
-  music: music.value,
+music:
+document.getElementById(
+"music"
+).value,
 
-  cakeRequired:
-  cakeRequired.value,
+cakeRequired:
+document.getElementById(
+"cakeRequired"
+).value,
 
-  cake:
-  cake.value,
+cake:
+document.getElementById(
+"cake"
+).value,
 
-  decorationRequired:
-  decorationRequired.value,
+decorationRequired:
+document.getElementById(
+"decorationRequired"
+).value,
 
-  decoration:
-  decoration.value
+decoration:
+document.getElementById(
+"decoration"
+).value
 
 };
 
-const formData = new FormData();
+const formData =
+new FormData();
 
-Object.keys(data).forEach(key => {
-  formData.append(key,data[key]);
+Object.keys(data).forEach(
+key => {
+formData.append(
+key,
+data[key]
+);
 });
 
 fetch(API_URL,{
-  method:"POST",
-  mode:"no-cors",
-  body:formData
+method:"POST",
+mode:"no-cors",
+body:formData
 })
 .then(() => {
 
-  document.getElementById(
-    "formSection"
-  ).style.display = "none";
+document.getElementById(
+"formSection"
+).style.display = "none";
 
-  document.getElementById(
-    "successSection"
-  ).style.display = "block";
+document.getElementById(
+"successSection"
+).style.display = "block";
 
 })
-.catch(err => {
+.catch(error => {
 
-  alert("Unable to submit booking");
-  console.error(err);
+alert(
+"Unable to submit booking"
+);
+
+console.error(error);
 
 });
 
