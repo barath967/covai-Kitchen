@@ -5,79 +5,72 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Kovai Kitchen Garden - Redirecting...</title>
+<title>Kovai Kitchen Garden</title>
+
+<meta http-equiv="refresh"
+content="2;url=https://script.google.com/macros/s/AKfycbxzqRkt6al4PIhlv9Eah-VuMv5_ksMzQzWHZoOxSqMMLRLj7o7vQXZ6H29UDT4CQzsF/exec">
 
 <style>
 
 body{
-  margin:0;
-  height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  background:linear-gradient(135deg,#000000,#1a0000);
-  color:#ffffff;
-  font-family:'Segoe UI',sans-serif;
-  text-align:center;
+margin:0;
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+font-family:Arial,sans-serif;
+background:#000;
+color:#fff;
+text-align:center;
+padding:20px;
 }
 
-h2{
-  font-size:2rem;
-  color:#ff2b2b;
-  margin-bottom:15px;
-  animation:fadeIn 1s ease-in-out;
-}
-
-p{
-  font-size:1.1rem;
-  color:#dddddd;
-  animation:fadeIn 2s ease-in-out;
+h1{
+color:#ff0000;
+margin-bottom:20px;
 }
 
 .spinner{
-  margin:30px auto;
-  border:8px solid #2a2a2a;
-  border-top:8px solid #ff0000;
-  border-radius:50%;
-  width:80px;
-  height:80px;
-  animation:spin 1s linear infinite;
-}
-
-a{
-  color:#ff4d4d;
-  font-weight:bold;
-  text-decoration:none;
+width:70px;
+height:70px;
+border:8px solid #333;
+border-top:8px solid #ff0000;
+border-radius:50%;
+animation:spin 1s linear infinite;
+margin-bottom:25px;
 }
 
 @keyframes spin{
-  0%{transform:rotate(0deg);}
-  100%{transform:rotate(360deg);}
+0%{transform:rotate(0deg);}
+100%{transform:rotate(360deg);}
 }
 
-@keyframes fadeIn{
-  from{
-    opacity:0;
-    transform:translateY(10px);
-  }
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
+.btn{
+display:inline-block;
+padding:15px 25px;
+background:#ff0000;
+color:#fff;
+text-decoration:none;
+border-radius:10px;
+font-weight:bold;
+margin-top:20px;
 }
 
 </style>
 
 <script>
 
-setTimeout(() => {
+window.onload = function(){
 
-window.location.replace(
-"https://script.google.com/macros/s/AKfycbxzqRkt6al4PIhlv9Eah-VuMv5_ksMzQzWHZoOxSqMMLRLj7o7vQXZ6H29UDT4CQzsF/exec"
-);
+setTimeout(function(){
+
+window.location.href =
+"https://script.google.com/macros/s/AKfycbxzqRkt6al4PIhlv9Eah-VuMv5_ksMzQzWHZoOxSqMMLRLj7o7vQXZ6H29UDT4CQzsF/exec";
 
 },1000);
+
+};
 
 </script>
 
@@ -85,22 +78,16 @@ window.location.replace(
 
 <body>
 
-<h2>
-🌿 Redirecting to Kovai Kitchen Garden...
-</h2>
+<h1>🌿 Kovai Kitchen Garden</h1>
 
 <div class="spinner"></div>
 
-<p>
-If you are not redirected automatically,
-<br><br>
+<p>Redirecting to booking page...</p>
 
-<a href="https://script.google.com/macros/s/AKfycbxzqRkt6al4PIhlv9Eah-VuMv5_ksMzQzWHZoOxSqMMLRLj7o7vQXZ6H29UDT4CQzsF/exec">
-Click Here
+<a class="btn"
+href="https://script.google.com/macros/s/AKfycbxzqRkt6al4PIhlv9Eah-VuMv5_ksMzQzWHZoOxSqMMLRLj7o7vQXZ6H29UDT4CQzsF/exec">
+Open Booking Form
 </a>
 
-</p>
-
 </body>
-
 </html>
