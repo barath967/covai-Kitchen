@@ -1,0 +1,521 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Kovai Kitchen Garden Booking</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+background:#000;
+color:#fff;
+padding:15px;
+}
+
+.container{
+width:100%;
+max-width:900px;
+margin:auto;
+background:#111;
+border:3px solid #ff0000;
+border-radius:28px;
+padding:40px;
+box-shadow:0 0 35px rgba(255,0,0,.35);
+}
+
+.title{
+text-align:center;
+font-size:42px;
+font-weight:700;
+color:#ff2b2b;
+margin-bottom:20px;
+}
+
+.subTitle{
+text-align:center;
+color:#ccc;
+margin-bottom:25px;
+font-size:22px;
+}
+
+label{
+display:block;
+margin-top:24px;
+margin-bottom:10px;
+font-weight:600;
+font-size:24px;
+color:#ff4d4d;
+}
+
+input,
+select{
+width:100%;
+height:70px;
+background:#1a1a1a;
+color:white;
+border:2px solid #444;
+border-radius:18px;
+padding:0 20px;
+font-size:22px;
+}
+
+input:focus,
+select:focus{
+outline:none;
+border:2px solid #ff2b2b;
+box-shadow:0 0 10px rgba(255,0,0,.4);
+}
+
+.packageBox{
+background:#161616;
+border-left:6px solid #ff2b2b;
+padding:20px;
+border-radius:14px;
+margin-top:15px;
+font-size:20px;
+line-height:1.7;
+color:#ddd;
+}
+
+.actionBtn{
+display:block;
+width:100%;
+text-align:center;
+padding:22px;
+margin-top:20px;
+background:#ff0000;
+color:white;
+text-decoration:none;
+border-radius:18px;
+font-weight:700;
+font-size:24px;
+}
+
+.actionBtn:hover{
+background:#d10000;
+}
+
+.submitBtn{
+width:100%;
+height:85px;
+background:#ff0000;
+color:white;
+border:none;
+border-radius:18px;
+font-size:28px;
+font-weight:bold;
+margin-top:30px;
+cursor:pointer;
+}
+
+.submitBtn:hover{
+background:#c00000;
+}
+
+.hidden{
+display:none;
+}
+
+.success{
+display:none;
+text-align:center;
+}
+
+.success h2{
+font-size:36px;
+color:#ff2b2b;
+margin-bottom:20px;
+}
+
+.success p{
+font-size:22px;
+line-height:1.8;
+color:#ddd;
+margin-bottom:20px;
+}
+
+.loader{
+text-align:center;
+padding:80px;
+font-size:24px;
+color:#ff2b2b;
+}
+
+@media(max-width:768px){
+
+.title{
+font-size:34px;
+}
+
+label{
+font-size:20px;
+}
+
+input,
+select{
+height:65px;
+font-size:18px;
+}
+
+.actionBtn{
+font-size:20px;
+}
+
+.submitBtn{
+font-size:24px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="loading" class="loader">
+Loading Kovai Kitchen Garden...
+</div>
+
+<div class="container hidden" id="formSection">
+
+<div class="title">
+🌿 Kovai Kitchen Garden Booking
+</div>
+
+<div class="subTitle">
+Reserve your garden dining experience
+</div>
+
+<form id="bookingForm">
+
+<label>Name</label>
+<input type="text" id="name" required>
+
+<label>Whatsapp Number</label>
+<input type="tel" id="whatsapp" required>
+
+<label>📅 Event Date</label>
+<input
+type="date"
+id="eventDate"
+required
+style="
+background:#fff;
+color:#000;
+">
+
+<label>🕒 From Time</label>
+<select id="fromTime">
+<option>06:00 AM</option>
+<option>07:00 AM</option>
+<option>08:00 AM</option>
+<option>09:00 AM</option>
+<option>10:00 AM</option>
+<option>11:00 AM</option>
+<option>12:00 PM</option>
+<option>01:00 PM</option>
+<option>02:00 PM</option>
+<option>03:00 PM</option>
+<option>04:00 PM</option>
+<option>05:00 PM</option>
+<option selected>06:00 PM</option>
+<option>07:00 PM</option>
+<option>08:00 PM</option>
+<option>09:00 PM</option>
+<option>10:00 PM</option>
+</select>
+
+<label>🕒 To Time</label>
+<select id="toTime">
+<option>06:00 AM</option>
+<option>07:00 AM</option>
+<option>08:00 AM</option>
+<option>09:00 AM</option>
+<option>10:00 AM</option>
+<option>11:00 AM</option>
+<option>12:00 PM</option>
+<option>01:00 PM</option>
+<option>02:00 PM</option>
+<option>03:00 PM</option>
+<option>04:00 PM</option>
+<option>05:00 PM</option>
+<option>06:00 PM</option>
+<option>07:00 PM</option>
+<option>08:00 PM</option>
+<option>09:00 PM</option>
+<option selected>10:00 PM</option>
+</select>
+
+<label>Head Count</label>
+<input type="number" id="headCount" min="1" required>
+
+<label>Plate Option</label>
+<select id="package" onchange="showPackageDescription()"></select>
+
+<div id="packageDescription" class="packageBox"></div>
+
+<label>Music System Required</label>
+<select id="music">
+<option>No</option>
+<option>Yes</option>
+</select>
+
+<label>Cake Required</label>
+<select id="cakeRequired" onchange="toggleCake()">
+<option>No</option>
+<option>Yes</option>
+</select>
+
+<div id="cakeDiv" class="hidden">
+
+<a id="cakePdf" target="_blank" class="actionBtn">
+🎂 View Cake Catalogue
+</a>
+
+<label>Cake No</label>
+<select id="cake"></select>
+
+</div>
+
+<label>Decoration Required</label>
+<select id="decorationRequired" onchange="toggleDecoration()">
+<option>No</option>
+<option>Yes</option>
+</select>
+
+<div id="decorationDiv" class="hidden">
+
+<a id="decorationPdf" target="_blank" class="actionBtn">
+🎈 View Decoration Catalogue
+</a>
+
+<label>Decoration No</label>
+<select id="decoration"></select>
+
+</div>
+
+<a id="locationLink" target="_blank" class="actionBtn">
+📍 OPEN LOCATION
+</a>
+
+<button type="submit" class="submitBtn">
+🚀 SUBMIT BOOKING
+</button>
+
+</form>
+
+</div>
+
+<div class="container success" id="successSection">
+
+<h2>🎉 Booking Request Submitted</h2>
+
+<p>
+🙏 Thanks Dear Customer
+<br><br>
+Please wait a moment.
+<br>
+We will check availability and update you soon.
+</p>
+
+<a id="successLocation"
+target="_blank"
+class="actionBtn">
+📍 OPEN LOCATION
+</a>
+
+</div>
+
+<script>
+
+const API_URL =
+"https://script.google.com/macros/s/AKfycbxtyUrBEPOE393zTqP8QfZQAg70X0SiXpBrehisQ0L1Wkg2AdbH2geTeKcTojRYppg2/exec";
+
+let masterData;
+
+fetch(API_URL + "?master=true")
+.then(r=>r.json())
+.then(loadMaster)
+.catch(err=>{
+document.getElementById("loading").innerHTML =
+"Unable to load booking form";
+console.error(err);
+});
+
+function loadMaster(data){
+
+masterData=data;
+
+document.getElementById("loading").style.display="none";
+document.getElementById("formSection").classList.remove("hidden");
+
+const packageDropdown =
+document.getElementById("package");
+
+data.packages.forEach(item=>{
+const option=document.createElement("option");
+option.value=item.name;
+option.text=item.name;
+packageDropdown.add(option);
+});
+
+showPackageDescription();
+
+data.cakes.forEach(item=>{
+const option=document.createElement("option");
+option.value=item;
+option.text=item;
+cake.add(option);
+});
+
+data.decorations.forEach(item=>{
+const option=document.createElement("option");
+option.value=item;
+option.text=item;
+decoration.add(option);
+});
+
+cakePdf.href=data.cakePdf;
+decorationPdf.href=data.decorationPdf;
+locationLink.href=data.locationLink;
+successLocation.href=data.locationLink;
+
+}
+
+function showPackageDescription(){
+
+const item=
+masterData.packages.find(
+x=>x.name===package.value
+);
+
+packageDescription.innerHTML=
+item ? item.description : "";
+
+}
+
+function toggleCake(){
+cakeDiv.style.display =
+cakeRequired.value==="Yes"
+? "block"
+: "none";
+}
+
+function toggleDecoration(){
+decorationDiv.style.display =
+decorationRequired.value==="Yes"
+? "block"
+: "none";
+}
+
+function formatEventSchedule(
+date,
+fromTime,
+toTime
+){
+
+const d=new Date(date);
+
+const formattedDate=
+d.toLocaleDateString(
+'en-GB',
+{
+day:'2-digit',
+month:'short',
+year:'numeric'
+}
+);
+
+return formattedDate +
+' | ' +
+fromTime +
+' - ' +
+toTime;
+
+}
+
+bookingForm.addEventListener(
+"submit",
+function(e){
+
+e.preventDefault();
+
+const selectedPackage=
+masterData.packages.find(
+x=>x.name===package.value
+);
+
+const data={
+
+name:name.value,
+whatsapp:whatsapp.value,
+
+eventSchedule:
+formatEventSchedule(
+eventDate.value,
+fromTime.value,
+toTime.value
+),
+
+headCount:headCount.value,
+
+package:package.value,
+
+packageDescription:
+selectedPackage ?
+selectedPackage.description : "",
+
+music:music.value,
+
+cakeRequired:
+cakeRequired.value,
+
+cake:
+cake.value,
+
+decorationRequired:
+decorationRequired.value,
+
+decoration:
+decoration.value
+
+};
+
+fetch(API_URL,{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify(data)
+})
+.then(r=>r.json())
+.then(response=>{
+
+formSection.style.display="none";
+successSection.style.display="block";
+
+})
+.catch(err=>{
+alert("Unable to submit booking");
+console.error(err);
+});
+
+});
+
+</script>
+
+</body>
+</html>
+```
