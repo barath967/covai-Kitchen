@@ -344,13 +344,28 @@ const API_URL =
 
 let masterData;
 
-fetch(API_URL + "?master=true")
-.then(r=>r.json())
-.then(loadMaster)
-.catch(err=>{
-document.getElementById("loading").innerHTML =
-"Unable to load booking form";
-console.error(err);
+const formData = new FormData();
+
+Object.keys(data).forEach(key => {
+  formData.append(key, data[key]);
+});
+
+fetch(API_URL,{
+  method:"POST",
+  mode:"no-cors",
+  body:formData
+})
+.then(() => {
+
+  document.getElementById("formSection").style.display = "none";
+  document.getElementById("successSection").style.display = "block";
+
+})
+.catch(err => {
+
+  alert("Unable to submit booking");
+  console.error(err);
+
 });
 
 function loadMaster(data){
@@ -451,65 +466,77 @@ function(e){
 
 e.preventDefault();
 
-const selectedPackage=
+const selectedPackage =
 masterData.packages.find(
-x=>x.name===package.value
+x => x.name === package.value
 );
 
-const data={
+const data = {
 
-name:name.value,
-whatsapp:whatsapp.value,
+  name: name.value,
 
-eventSchedule:
-formatEventSchedule(
-eventDate.value,
-fromTime.value,
-toTime.value
-),
+  whatsapp: whatsapp.value,
 
-headCount:headCount.value,
+  eventSchedule:
+  formatEventSchedule(
+    eventDate.value,
+    fromTime.value,
+    toTime.value
+  ),
 
-package:package.value,
+  headCount: headCount.value,
 
-packageDescription:
-selectedPackage ?
-selectedPackage.description : "",
+  package: package.value,
 
-music:music.value,
+  packageDescription:
+  selectedPackage
+  ? selectedPackage.description
+  : "",
 
-cakeRequired:
-cakeRequired.value,
+  music: music.value,
 
-cake:
-cake.value,
+  cakeRequired:
+  cakeRequired.value,
 
-decorationRequired:
-decorationRequired.value,
+  cake:
+  cake.value,
 
-decoration:
-decoration.value
+  decorationRequired:
+  decorationRequired.value,
+
+  decoration:
+  decoration.value
 
 };
 
+const formData = new FormData();
+
+Object.keys(data).forEach(key => {
+  formData.append(key,data[key]);
+});
+
 fetch(API_URL,{
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify(data)
+  method:"POST",
+  mode:"no-cors",
+  body:formData
 })
-.then(r=>r.json())
-.then(response=>{
+.then(() => {
 
-formSection.style.display="none";
-successSection.style.display="block";
+  document.getElementById(
+    "formSection"
+  ).style.display = "none";
+
+  document.getElementById(
+    "successSection"
+  ).style.display = "block";
 
 })
-.catch(err=>{
-alert(err);
-console.error(err);
-})
+.catch(err => {
+
+  alert("Unable to submit booking");
+  console.error(err);
+
+});
 
 });
 
